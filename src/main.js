@@ -1,33 +1,53 @@
 const contactForm = document.getElementById('contact');
-contactForm.addEventListener('submit', handleSubmit);
-
-function handleSubmit(e) {
-    e.preventDefault();
-    const f = e.target;
-    const name = f.name.value || '匿名';
-    const email = f.email.value || '';
-    const message = f.message.value || '';
-    const subject = encodeURIComponent('お問い合わせ: ' + name);
-    const body = encodeURIComponent(message + '\n\n返信先: ' + email);
-    window.location.href = 'mailto:r-wada@digeon.co?subject=' + subject + '&body=' + body;
-}
-
-//1. 変数に要素を代入(const)
 const container = document.querySelector('.profile-container');
+// フォームの元の内容を保存しておく（戻るボタン用）
+const originalContent = container.innerHTML;
 
-// 2. イベントを待機
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // デフォルト動作停止
+const handleSubmit = (e) => {
+    e.preventDefault();
 
-    // 3. 入力値を取得
-    const name = document.getElementById('name').value;
+    const formData = new FormData(e.target);
+    const name = formData.get('name');
+    const message = formData.get('message');
 
-    // 4. テンプレートリテラルで画面を書き換え (SPAの基礎)
+    // --- 1. 追加：バリデーション ---
+    if (!name || !message) {
+        alert('名前とメッセージを入力してくださいにゃ！');
+        return; // ここで処理を終了（メールも送らないし画面も変えない）
+    }
+
+    // --- 2. 既存：メール送信 ---
+    sendMail(name, formData.get('email'), message);
+
+    // --- 3. 既存：完了画面表示 ---
+    showSuccessMessage(name);
+};
+
+const sendMail = (name, email, message) => {
+    const subject = encodeURIComponent(`お問い合わせ: ${name}`);
+    const body = encodeURIComponent(`${message}\n\n返信先: ${email}`);
+    window.location.href = `mailto:r-wada@digeon.co?subject=${subject}&body=${body}`;
+};
+
+const showSuccessMessage = (name) => {
     container.innerHTML = `
-        <div style="text-align: center; padding: 50px;">
+        <div class="success-message" style="text-align: center; padding: 50px;">
             <h2>Thanks, ${name}!</h2>
             <p>メッセージを受け取りました。</p>
-            <button onclick="location.reload()">戻る</button>
+            <button id="backBtn">戻る</button>
         </div>
     `;
-});
+
+    // 戻るボタンにイベントを登録
+    document.getElementById('backBtn').addEventListener('click', backToForm);
+};
+
+// --- 4. 追加：リロードしない「戻る」処理 ---
+const backToForm = () => {
+    container.innerHTML = originalContent;
+    // 画面を書き換えるとイベントリスナーが消えるので、再度登録が必要
+    const newForm = document.getElementById('contact');
+    newForm.addEventListener('submit', handleSubmit);
+};
+
+contactForm.addEventListener('submit', handleSubmit);
