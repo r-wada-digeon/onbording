@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>プロフィール</title>
-    <base href="/">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./src/style.css">
 </head>
 
 <body>
     <main class="profile-container">
         <header class="profile-header">
-            <img src="avatar.jpeg" alt="プロフィール画像" class="avatar">
+            <img src="./public/avatar.jpeg" alt="プロフィール画像" class="avatar">
             <h1 class="name">和田 嶺</h1>
             <p class="title">インターン（研修中）</p>
         </header>
@@ -19,7 +19,7 @@
         <section class="profile-summary">
             <h2>経歴</h2>
             <p>pythonでDLの開発経験あり、Web開発は現在学んでおります!
-            趣味は、コーヒー、運動。最近は出勤に時間を取られてできていません😭
+                趣味は、コーヒー、運動。最近は出勤に時間を取られてできていません😭
             </p>
             <ul>
                 <li>2021/4-2026/3: 立命館大学国際関係学部</li>
@@ -53,17 +53,7 @@
         </section>
     </main>
 
-    <script>
-        function handleSubmit(e) {
-            e.preventDefault();
-            const f = e.target;
-            const name = f.name.value || '匿名';
-            const email = f.email.value || '';
-            const message = f.message.value || '';
-            const subject = encodeURIComponent('お問い合わせ: ' + name);
-            const body = encodeURIComponent(message + '\n\n返信先: ' + email);
-            window.location.href = 'mailto:r-wada@digeon.co?subject=' + subject + '&body=' + body;
-        }
-    </script>
+    <script src="./src/main.js"></script>
 </body>
+
 </html>
