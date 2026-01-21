@@ -1,7 +1,11 @@
-const contactForm = document.getElementById('contact');
-const container = document.querySelector('.profile-container');
-// フォームの元の内容を保存しておく（戻るボタン用）
+// HTMLに追加した 'profile-container' をここで探します
+const container = document.querySelector('.profile-container'); 
 const originalContent = container.innerHTML;
+
+// 注意: 初期化時に container が見つからないとエラーになるのでチェック
+if (!container) {
+    console.error("エラー: .profile-container が見つかりません！HTMLを確認してください。");
+}
 
 const handleSubmit = (e) => {
     e.preventDefault();
@@ -10,16 +14,13 @@ const handleSubmit = (e) => {
     const name = formData.get('name');
     const message = formData.get('message');
 
-    // --- 1. 追加：バリデーション ---
+    // バリデーション
     if (!name || !message) {
         alert('名前とメッセージを入力してくださいにゃ！');
-        return; // ここで処理を終了（メールも送らないし画面も変えない）
+        return;
     }
 
-    // --- 2. 既存：メール送信 ---
     sendMail(name, formData.get('email'), message);
-
-    // --- 3. 既存：完了画面表示 ---
     showSuccessMessage(name);
 };
 
@@ -30,24 +31,29 @@ const sendMail = (name, email, message) => {
 };
 
 const showSuccessMessage = (name) => {
+    // 修正: Tailwind CSS のクラスを使ってデザイン
     container.innerHTML = `
-        <div class="success-message" style="text-align: center; padding: 50px;">
-            <h2>Thanks, ${name}!</h2>
-            <p>メッセージを受け取りました。</p>
-            <button id="backBtn">戻る</button>
+        <div class="flex flex-col items-center justify-center py-20 text-center animate-pulse">
+            <h2 class="text-2xl font-bold text-[#28a745] mb-4">Thanks, ${name}!</h2>
+            <p class="text-gray-600 mb-8">メッセージを受け取りました。</p>
+            <button id="backBtn" class="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600 transition-colors">
+                戻る
+            </button>
         </div>
     `;
 
-    // 戻るボタンにイベントを登録
     document.getElementById('backBtn').addEventListener('click', backToForm);
 };
 
-// --- 4. 追加：リロードしない「戻る」処理 ---
 const backToForm = () => {
     container.innerHTML = originalContent;
-    // 画面を書き換えるとイベントリスナーが消えるので、再度登録が必要
+    // フォームが復活したので、イベントリスナーを再登録
     const newForm = document.getElementById('contact');
     newForm.addEventListener('submit', handleSubmit);
 };
 
-contactForm.addEventListener('submit', handleSubmit);
+// 初回のイベント登録
+const contactForm = document.getElementById('contact');
+if (contactForm) {
+    contactForm.addEventListener('submit', handleSubmit);
+}

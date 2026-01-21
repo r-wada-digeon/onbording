@@ -6,50 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>プロフィール</title>
     <link rel="stylesheet" href="./src/style.css">
-</head>
+    </head>
 
 <body>
-    <main class="profile-container">
-        <header class="profile-header">
-            <img src="./public/avatar.jpeg" alt="プロフィール画像" class="avatar">
-            <h1 class="name">和田 嶺</h1>
-            <p class="title">インターン（研修中）</p>
+    <main class="profile-container mx-auto max-w-200 bg-white p-10 rounded-2xl shadow-[0_10px_25px_rgba(0,0,0,0.05)]">
+        <header class="text-center mb-5">
+            <img src="./public/avatar.jpeg" alt="プロフィール画像" class="avatar inline-block">
+            <h1 class="text-3xl font-bold m-0">和田 嶺</h1>
+            <p class="text-gray-500 text-lg mt-1">インターン（研修中）</p>
         </header>
 
-        <section class="profile-summary">
-            <h2>経歴</h2>
-            <p>pythonでDLの開発経験あり、Web開発は現在学んでおります!
-                趣味は、コーヒー、運動。最近は出勤に時間を取られてできていません😭
-            </p>
-            <ul>
+        <section class="mt-6 pt-5 border-t border-gray-100 mb-8">
+            <h2 class="text-(--primary) text-xl mb-4">経歴</h2>
+            <p class="mb-4">pythonでDLの開発経験あり、Web開発は現在学んでおります! 趣味は、コーヒー、運動。最近は出勤に時間を取られてできていません😭</p>
+            <ul class="list-disc list-inside">
                 <li>2021/4-2026/3: 立命館大学国際関係学部</li>
                 <li>2026/4~: 株式会社 Digeon</li>
             </ul>
         </section>
 
-        <section class="profile-links">
-            <h2>リンク</h2>
-            <ul>
-                <li><a href="https://github.com/r-wada-digeon" target="_blank" rel="noopener">GitHub</a></li>
-                <li><a href="mailto:r-wada@digeon.co">メール</a></li>
+        <section class="mt-6 pt-5 border-t border-gray-100 mb-8">
+            <h2 class="text-(--primary) text-xl mb-4">リンク</h2>
+            <ul class="flex gap-4 p-0 list-none">
+                <li><a class="bg-(--primary) text-white px-4 py-2 rounded-md hover:bg-(--primary-dark) transition-colors"
+                        href="https://github.com/r-wada-digeon" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a class="bg-(--primary) text-white px-4 py-2 rounded-md hover:bg-(--primary-dark) transition-colors"
+                        href="mailto:r-wada@digeon.co">メール</a></li>
             </ul>
         </section>
 
-        <section class="contact-form">
-            <h2>お問い合わせ</h2>
-            <form id="contact" action="#" onsubmit="handleSubmit(event)">
-                <label for="name">名前</label><br>
-                <input type="text" id="name" name="name" placeholder="あなたの名前" required><br>
+        <section class="mt-6 pt-5 border-t border-gray-100">
+            <h2 class="text-(--primary) text-xl mb-4">お問い合わせ</h2>
+            <form id="contact" class="flex flex-col gap-4">
+                <label for="name" class="font-semibold">名前</label>
+                <input class="w-full p-3 border border-gray-200 rounded-md" type="text" id="name" name="name"
+                    placeholder="あなたの名前" required>
 
-                <label for="email">メール</label><br>
-                <input type="email" id="email" name="email" placeholder="you@example.com" required><br>
+                <label for="email" class="font-semibold">メール</label>
+                <input class="w-full p-3 border border-gray-200 rounded-md" type="email" id="email" name="email"
+                    placeholder="you@example.com" required>
 
-                <label for="message">メッセージ</label><br>
-                <textarea id="message" name="message" rows="4" placeholder="メッセージ"></textarea><br>
+                <label for="message" class="font-semibold">メッセージ</label>
+                <textarea class="w-full p-3 border border-gray-200 rounded-md" id="message" name="message" rows="4"
+                    placeholder="メッセージ"></textarea>
 
-                <button type="submit">送信</button>
+                <button class="bg-[#28a745] hover:bg-[#218838] text-white py-3 rounded-md" type="submit">送信</button>
             </form>
-
         </section>
     </main>
 
